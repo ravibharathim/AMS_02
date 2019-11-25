@@ -1,0 +1,18 @@
+﻿.row-space{
+    margin-top : 15px;
+}
+
+.control-float-right{
+    float:right;
+}
+
+/*.grid-action-icon-space {
+    margin: 5px;
+}*/
+
+table.table-bordered.dataTable th:last-child, table.table-bordered.dataTable th:last-child, table.table-bordered.dataTable td:last-child, table.table-bordered.dataTable td:last-child{
+text-align:center;
+}
+table tbody tr td a {
+    margin: 5px;
+}

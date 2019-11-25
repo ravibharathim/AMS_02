@@ -1,0 +1,188 @@
+﻿@using AMSUtilities.Enums;
+@{
+    int i = 0;
+}
+<!-- iCheck for checkboxes and radio inputs -->
+<link href="~/Content/AMS/iCheck/all.css" rel="stylesheet" />
+@model AMSUtilities.Models.HardwareAssetModel
+<div class="row" id="componentsTab" style="@Model.componentStyle">
+    <div class="col-sm-12" style="margin-top:20px">
+        <!-- Custom Tabs -->
+        <div class="nav-tabs-custom">
+            <div class="box-header with-border">
+                <h3 class="box-title">Components</h3>
+            </div>
+            <div style="float:right">
+                <span class="label label-success">Hardware</span>
+                <span class="label label-warning">Software</span>
+            </div>
+            @*<ul class="nav nav-tabs">
+                   <li class="active"><a href="#tab_1" data-toggle="tab">Hardware Components</a></li>
+                <li><a href="#tab_2" data-toggle="tab">Software Components(OEM)</a></li>
+                    </ul>*@
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab_1">
+                    <div class="box-body">
+                        @if (Model.ComponentTypeModels != null)
+                        {
+                            if (Model.ComponentTypeModels.ToList().Count > 0)
+                            {
+                                foreach (var item in Model.ComponentTypeModels)
+                                {
+                                    var selectList = new SelectList(Model.ComponentsModels.Where(fet => fet.ComponentTypeID == item.ID).ToList(), "ID", "ComponentName");
+                                    if (Model.ComponentAssetMapping != null)
+                                    {
+                                        if (Model.ComponentAssetMapping.ToList().Count > 0)
+                                        {
+                                            var component = Model.ComponentAssetMapping.Where(fet => fet.ComponentTypeID == item.ID).FirstOrDefault();
+                                            if (component != null)
+                                            {
+                                                selectList = new SelectList(Model.ComponentsModels.Where(fet => fet.ComponentTypeID == item.ID).ToList(), "ID", "ComponentName", component.ComponentID);
+                                                @Html.Hidden("ComponentAssetMapping[" + i + "].ID", component.ID);
+                                            }
+                                        }
+                                    }
+                                    var style = "";
+                                    if (item.AssetCategoryId == (int)AssetCategories.Hardware)
+                                    {
+                                        style = "color: #00a65a !important";
+                                    }
+                                    else if (item.AssetCategoryId == (int)AssetCategories.Software)
+                                    {
+                                        style = "color: #f39c12 !important";
+                                    }
+                                    var modalId = "modal-" + item.ID;
+                                    int assetCategoryId = (int)AMSUtilities.Enums.AssetCategories.Hardware;
+                                    var dropdownId = "drp" + item.ID;
+                                    var mandateId = "checkMandate" + item.ID;
+                                    var componentNameId = "txtComponent" + item.ID;
+                                    var descriptionId = "txtDescription" + item.ID;
+                                    var compValidationId = "compValidation" + item.ID;
+                                    var descValidationId = "descValidation" + item.ID;
+                                    <div class="col-md-10">
+                                        <div class="form-group row-space">
+                                            <label for="inputEmail3" class="col-sm-2 control-label" style="@style">@item.Name</label>
+                                            @Html.Hidden("ComponentAssetMapping[" + i + "].ComponentTypeName", @item.Name)
+                                            @Html.Hidden("ComponentAssetMapping[" + i + "].ComponentTypeID", @item.ID)
+                                            @Html.Hidden("ComponentAssetMapping[" + i + "].AssetCategoryId", @item.AssetCategoryId)
+
+                                            @if (Model.ComponentAssetMapping != null)
+                                            {
+                                                if (Model.ComponentAssetMapping.ToList().Count > 0)
+                                                {
+                                                    var component = Model.ComponentAssetMapping.Where(fet => fet.ComponentTypeID == item.ID).FirstOrDefault();
+                                                    if (component != null)
+                                                    {
+                                                        <div class="col-sm-2">
+                                                            @Html.CheckBox("ComponentAssetMapping[" + i + "].Mandatory", (bool)component.Mandatory, new { @id = mandateId, @class = "minimalCheck minimal" })
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="col-sm-2">
+                                                            @Html.CheckBox("ComponentAssetMapping[" + i + "].Mandatory", (bool)false, new { @id = mandateId, @class = "minimalCheck minimal" })
+                                                        </div>
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <div class="col-sm-2">
+                                                    @Html.CheckBox("ComponentAssetMapping[" + i + "].Mandatory", (bool)item.Mandatory, new { @id = mandateId, @class = "minimalCheck minimal" })
+                                                </div>
+                                            }
+                                            @if (item.Mandatory == true)
+                                            {
+                                                <div class="col-sm-7">
+                                                    @Html.DropDownList("ComponentAssetMapping[" + i + "].ComponentID", selectList, "Please Select", new { @id = dropdownId, @class = "form-control", @required = "required" })
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-sm-7">
+                                                    @Html.DropDownList("ComponentAssetMapping[" + i + "].ComponentID", selectList, "Please Select", new { @id = dropdownId, @class = "form-control" })
+                                                </div>
+                                            }
+
+
+                                            <div class="col-sm-1 text-left">
+                                                <a data-toggle="modal" data-target="#@modalId" data-select="assigned_user_select" data-backdrop="static" class="btn btn-sm btn-default">New</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal fade" id="@modalId">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                    <h4 class="modal-title">Add @item.Name</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group row-space">
+                                                            <label for="inputEmail3" class="col-sm-2 control-label">Component: </label>
+                                                            <div class="col-sm-7">
+                                                                @Html.TextBox("componentName", "" as string, new { @id = componentNameId, @class = "form-control" })
+                                                                <label class="has-error" style="color:red;display:none" id="@compValidationId">Invalid Component name </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group row-space">
+                                                            <label for="inputEmail3" class="col-sm-2 control-label">Description: </label>
+                                                            <div class="col-sm-7">
+                                                                @Html.TextBox("componentName", "" as string, new { @id = descriptionId, @class = "form-control" })
+                                                                <label class="has-error" style="color:red;display:none" id="@descValidationId">Invalid Description </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer" style="border-top:none">
+                                                    <div class="row-space">
+                                                        <button type="button" class="btn btn-primary row-space" onclick="createComponent(@item.ID,@assetCategoryId,'@dropdownId','@componentNameId','@descriptionId','@compValidationId','@descValidationId','@modalId')">Add Component</button>
+                                                        <button type="button" class="btn btn-primary row-space" data-dismiss="modal">Cancel</button>
+                                                        <label class="success componentSuccess" style="color:green;display:none">Component added successfully</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    i++;
+                                }
+                            }
+                        }
+                    </div>
+                </div>
+                <!-- /.tab-pane -->
+            </div>
+            <!-- /.tab-content -->
+        </div>
+        <!-- nav-tabs-custom -->
+    </div>
+</div>
+<script src="~/Scripts/Libraries/icheck.min.js"></script>
+<script>
+    //iCheck for checkbox and radio inputs
+$('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+    checkboxClass: 'icheckbox_minimal-blue',
+    radioClass: 'iradio_minimal-blue'
+})
+      //$('table input[type="checkbox"]').change(function() {
+      //      // determine the value of the status parameter based on whether
+      //      // the checkbox that we clicked on was checked or unchecked
+      //      var status = $(this).is(':checked') ? 'unchecked' : 'checked';
+      //  });
+    $('input[type="checkbox"].minimalCheck').on('ifChanged', function (event) {
+      //  alert(this.id);
+        var status = $(this).is(':checked') ? 'checked' : 'unchecked';
+      //  alert(status);
+        if (status == "checked") {
+            $("#" + this.id.replace("checkMandate","drp")).prop('required', true);
+        }
+        else {
+            $("#" + this.id.replace("checkMandate","drp")).prop('required', false);
+        }
+});
+</script>

@@ -1,0 +1,65 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@using (Html.BeginForm("CreateAsset", "Home", FormMethod.Post, new { @id = "formCreateAsset", @class = "formAssetCreation" }))
+{
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Create New Asset</h3>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label for="Asset_Category">Asset Category</label>
+                            <select id="AssetCategory" name="AssetCategory" class="form-control">
+                                <option disabled selected value="">Please select value</option>
+                                <option value="1">Hardware</option>
+                                <option value="2">Software</option>
+                                <option value="3">Original Equipment Manufacturer</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="partialPlaceHolder"></div>    
+            <div class="box-footer" id="footerId">
+                <div id="conformBox"></div>
+                <div class="col-sm-2"   style="padding-right:0px;float:right">
+                    <button type="button" class="btn btn-primary pull-right" id="btnSubmit" onclick="SubmitForm(this)">
+                        CREATE ASSET
+                    </button>
+                </div>
+            </div>
+        </div>
+        </div>
+}
+<script>
+    $("#footerId").hide();
+    $("#AssetCategory").on("change", function(){
+        var selectedValue = $(this).children("option:selected").val();
+         //    + "?selectedItem=" + $(this).val();
+        var url = '';       
+        if (selectedValue == 1) {
+            url = '@Url.Action("HardwareAsset", "Home")';
+        }
+        else if (selectedValue == 2) {
+            url = '@Url.Action("SoftwareAsset", "Home")';
+        }
+        else if (selectedValue == 3) {
+            url = '@Url.Action("OEMAsset", "Home")';
+        }
+
+        if (url != "" && url != null) {
+            $("#partialPlaceHolder").load(url, function () {
+                $('#partialPlaceHolder').fadeIn('fast');
+            })
+            $( "#footerId" ).show();
+        }
+        else {
+            $("#footerId").hide();
+        }
+   
+})
+</script>

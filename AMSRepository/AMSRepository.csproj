@@ -1,0 +1,244 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.3.0\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.3.0\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C3512E59-6383-40F6-9AF9-412A6B272BC0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AMSRepository</RootNamespace>
+    <AssemblyName>AMSRepository</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.3.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.3.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BaseRepository.cs" />
+    <Compile Include="IRepository\IHardwareAssetRepository.cs" />
+    <Compile Include="IRepository\ISoftwareAssetRepository.cs" />
+    <Compile Include="Models\AMSEntities.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AMSEntities.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AMSEntities.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AMSEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AMSEntities.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AMSEntities.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AssetCategory.cs">
+      <DependentUpon>AMSEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AssetPurchaseOrderMapping.cs">
+      <DependentUpon>AMSEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AssetRequest.cs">
+      <DependentUpon>AMSEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AssetRequestApprovalHistory.cs">
+      <DependentUpon>AMSEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AssetRequestStatus.cs">
+      <DependentUpon>AMSEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Assets.cs">
+      <DependentUpon>AMSEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AssetStatus.cs">
+      <DependentUpon>AMSEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AssetTracker.cs">
+      <DependentUpon>AMSEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AssetTypes.cs">
+      <DependentUpon>AMSEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ComponentAssetMapping.cs">
+      <DependentUpon>AMSEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Components.cs">
+      <DependentUpon>AMSEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ComponentStatus.cs">
+      <DependentUpon>AMSEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ComponentTracker.cs">
+      <DependentUpon>AMSEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ComponentType.cs">
+      <DependentUpon>AMSEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Employee.cs">
+      <DependentUpon>AMSEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EmployeeAssetMapping.cs">
+      <DependentUpon>AMSEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EmployeeRole.cs">
+      <DependentUpon>AMSEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HardwareAssets.cs">
+      <DependentUpon>AMSEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Location.cs">
+      <DependentUpon>AMSEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Log.cs">
+      <DependentUpon>AMSEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PurchaseOrder.cs">
+      <DependentUpon>AMSEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PurchaseStatus.cs">
+      <DependentUpon>AMSEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Quotation.cs">
+      <DependentUpon>AMSEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QuotationStatus.cs">
+      <DependentUpon>AMSEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Seats.cs">
+      <DependentUpon>AMSEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SoftwareAssets.cs">
+      <DependentUpon>AMSEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Vendor.cs">
+      <DependentUpon>AMSEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\AssetRepository.cs" />
+    <Compile Include="Repository\AssetTrackerRepository.cs" />
+    <Compile Include="Repository\AssetTypeRepository.cs" />
+    <Compile Include="Repository\AssetCategoryRepository.cs" />
+    <Compile Include="IRepository\IAssetCategoryRepository.cs" />
+    <Compile Include="IRepository\IAssetTypeRepository.cs" />
+    <Compile Include="IRepository\IVendorRepository.cs" />
+    <Compile Include="Repository\ComponentAssetMappingRepository.cs" />
+    <Compile Include="Repository\ComponentsRepository.cs" />
+    <Compile Include="Repository\ComponentTrackerRepository.cs" />
+    <Compile Include="Repository\ComponentTypeRepository.cs" />
+    <Compile Include="IRepository\IComponentTypeRepository.cs" />
+    <Compile Include="Repository\EmployeeAssetMappingRepository.cs" />
+    <Compile Include="Repository\EmployeeRepository.cs" />
+    <Compile Include="Repository\EmployeeRoleRepository.cs" />
+    <Compile Include="IRepository\IEmployeeAssetMappingRepository.cs" />
+    <Compile Include="IRepository\IEmployeeRepository.cs" />
+    <Compile Include="IRepository\IEmployeeRoleRepository.cs" />
+    <Compile Include="IRepository\ILocationRepository.cs" />
+    <Compile Include="IRepository\ISeatsRepository.cs" />
+    <Compile Include="IRepository\IAssetPurchaseOrderMappingRepository.cs" />
+    <Compile Include="IRepository\IPurchaseOrderRepository.cs" />
+    <Compile Include="IRepository\IPurchaseStatusRepository.cs" />
+    <Compile Include="IRepository\IQuotationRepository.cs" />
+    <Compile Include="IRepository\IQuotationStatusRepository.cs" />
+    <Compile Include="IRepository\IComponentAssetMappingRepository.cs" />
+    <Compile Include="IRepository\IComponentsRepository.cs" />
+    <Compile Include="IRepository\IAssetRepository.cs" />
+    <Compile Include="IRepository\IAssetTrackerRepository.cs" />
+    <Compile Include="Repository\HardwareAssetRepository.cs" />
+    <Compile Include="IRepository\IComponentTrackerRepository.cs" />
+    <Compile Include="Repository\LocationRepository.cs" />
+    <Compile Include="Repository\AssetPurchaseOrderMappingRepository.cs" />
+    <Compile Include="Repository\PurchaseOrderRepository.cs" />
+    <Compile Include="Repository\PurchaseStatusRepository.cs" />
+    <Compile Include="Repository\QuotationRepository.cs" />
+    <Compile Include="Repository\QuotationStatusRepository.cs" />
+    <Compile Include="Repository\SeatsRepository.cs" />
+    <Compile Include="Repository\SoftwareAssetRepository.cs" />
+    <Compile Include="Repository\VendorRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AMSUtilities\AMSUtilities.csproj">
+      <Project>{1aa313f2-10e9-4e3e-9de5-aa1c68de5e6f}</Project>
+      <Name>AMSUtilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <EntityDeploy Include="Models\AMSEntities.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>AMSEntities.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Models\AMSEntities.edmx.diagram">
+      <DependentUpon>AMSEntities.edmx</DependentUpon>
+    </None>
+    <None Include="obj\Debug\AMSRepository.csproj.CoreCompileInputs.cache" />
+    <None Include="obj\Debug\build.force" />
+    <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="obj\Debug\TempPE\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Models\AMSEntities.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AMSEntities.edmx</DependentUpon>
+      <LastGenOutput>AMSEntities.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\AMSEntities.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AMSEntities.edmx</DependentUpon>
+      <LastGenOutput>AMSEntities.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.3.0\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.3.0\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.3.0\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.3.0\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.3.0\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.3.0\build\EntityFramework.targets')" />
+</Project>

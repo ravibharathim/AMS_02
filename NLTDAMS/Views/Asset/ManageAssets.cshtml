@@ -1,0 +1,161 @@
+﻿@model IEnumerable<AMSUtilities.Models.AssetModel>
+@using AMSUtilities.Enums;
+@{
+    ViewBag.Title = "ManageAssets";
+}
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Assets</h3>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            @*<input type="button" value="Create Asset" class="btn btn-primary control-float-right" onclick='window.location.href = "@Url.Action("CreateAsset", "Asset", routeValues: null)"' />*@
+                            @*<div class="row">
+                                <div class="col-sm-3">
+                                    <label for="Asset_Category">Create Asset</label>
+                                </div>
+                            </div>*@
+                        </div>
+                    </div>
+                    <div class="row row-space">
+                        <div class="col-sm-12">
+
+                            <table id="manageAssets" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>@Html.DisplayNameFor(model => model.AssetName)</th>
+                                        <th>@Html.DisplayNameFor(model => model.AssetType)</th>
+                                        <th>@Html.DisplayNameFor(model => model.SerialNumber)</th>
+                                        <th>@Html.DisplayNameFor(model => model.AssetStatus)</th>
+                                        <th>@Html.DisplayNameFor(model => model.EmployeeName)</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(modelItem => item.AssetName)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.AssetType)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.SerialNumber)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.AssetStatus)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.EmployeeName)</td>
+                                            <td>
+                                                @if (!string.IsNullOrEmpty(item.EmployeeName))
+                                                {
+                                                    <a class="fa fa-fw fa-thumbs-o-down" data-toggle="tooltip" style="cursor:pointer" title="UnAssign" onclick="GetUnassignAsset(@item.ID);" data-backdrop="static"></a>
+                                                }
+                                                else
+                                                {
+                                                    <a class="fa fa-fw fa-thumbs-up" data-toggle="tooltip" style="cursor:pointer" title="Assign" onclick="GetAssignAsset(@item.ID);" data-backdrop="static"></a>
+                                                }
+                                                @if (item.CategoryID == (int)AssetCategories.Software)
+                                                {
+                                                    <a class="fa fa-edit" data-toggle="tooltip" title="Edit" href="@Url.Action("EditSoftwareAsset","Asset",new { id=item.ID})"></a>
+                                                }
+                                                else
+                                                {
+                                                    <a class="fa fa-edit" data-toggle="tooltip" title="Edit" href="@Url.Action("EditHardwareAsset","Asset",new { id=item.ID})"></a>
+                                                }
+                                                @if (item.CategoryID == (int)AssetCategories.Software)
+                                                {
+                                                    <a class="fa fa-clone" data-toggle="tooltip" title="Clone" href="@Url.Action("CloneSoftwareAsset","Asset",new { assetId=item.ID})"></a>
+                                                }
+                                                else
+                                                {
+                                                    <a class="fa fa-clone" data-toggle="tooltip" title="Clone" href="@Url.Action("CloneHardwareAsset","Asset",new { assetId=item.ID})"></a>
+                                                }
+
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div id="LoadPopup">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    $(document).ready(function () {
+        DisplayMessage("@TempData["MessageType"]", "@TempData["Message"]");
+      //  $('#manageAssets').DataTable();
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+
+    function GetAssignAsset(ID) {
+        var url = '@Url.Action("AssignAsset", "Asset")?Id=' + ID; 
+        if (url != "" && url != null) {
+            $("#LoadPopup").load(url, function () {
+                $('#LoadPopup').show();
+                $('#modal-Assign').modal({
+                    show: 'true',
+                    backdrop : false
+                });
+            })
+        }
+    }
+
+    function GetUnassignAsset(ID) {
+        var url = '@Url.Action("UnassignAsset", "Asset")?Id=' + ID; 
+        if (url != "" && url != null) {
+            $("#LoadPopup").load(url, function () {
+                $('#LoadPopup').show();
+                $('#modal-Unassign').modal({
+                    show: 'true',
+                    backdrop : false
+                });
+            })
+        }
+    }   
+$(document).ready(function() {
+    // Setup - add a text input to each footer cell
+    $('#manageAssets thead tr').clone(true).appendTo('#manageAssets thead');
+    var Length = 0;
+    $('#manageAssets thead tr:eq(1) th').each(function (i) {
+        Length = Length + 1;
+    });
+    Length = Length - 1;
+    $('#manageAssets thead tr:eq(1) th').each(function (i) {
+        if (i < Length) {
+        var title = $(this).text();
+        $(this).html( '<input type="text" class="form-control" style="width:150px;" placeholder="'+title+'" />' );
+ 
+        $( 'input', this ).on( 'keyup change', function () {
+            if ( table.column(i).search() !== this.value ) {
+                table
+                    .column(i)
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+        }
+        else {
+            $(this).empty("");
+        }
+    });
+ 
+    var table = $('#manageAssets').DataTable({
+        orderCellsTop: true,
+        fixedHeader: true
+    });
+});
+</script>
+
+
+
+
+

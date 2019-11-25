@@ -1,0 +1,90 @@
+﻿@model IEnumerable<AMSUtilities.Models.QuotationModel>
+@{
+    ViewBag.Title = "ManageQuotation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Quotations</h3>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <input type="button" value="Create Quotation" class="btn btn-primary control-float-right" onclick='window.location.href = "@Url.Action("Create", "Quotation", routeValues: null)"' />
+                    </div>
+                </div>
+                <div class="row row-space">
+                    <div class="col-sm-12">
+
+                        <table id="manageQuotations" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(model => model.VendorName)</th>
+                                    <th>@Html.DisplayNameFor(model => model.QuotationFilePath)</th>
+                                    <th>@Html.DisplayNameFor(model => model.QuotationStatus)</th>
+                                    <th>@Html.DisplayNameFor(model => model.QuotationReceivedDate)</th>
+                                    <th></th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@Html.DisplayFor(modelItem => item.VendorName)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.QuotationFilePath)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.QuotationStatus)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.QuotationReceivedDate)</td>
+                                        <td>
+                                            @if (item.QuotationStatusID == (int)AMSUtilities.Enums.QuotationStatus.ApprovalPending)
+                                            {
+                                                <a class="fa fa-check" data-toggle="tooltip" title="Approve" href="@Url.Action("ApproveQuotation","Quotation",new { quotationId=item.ID})"></a>
+                                            }
+                                            @if (item.QuotationStatusID == (int)AMSUtilities.Enums.QuotationStatus.Approved)
+                                            {
+                                                <a class="fa fa-dollar" data-toggle="tooltip" title="Generate Invoice" onclick="GetInvoice('@item.VendorID')"></a>
+                                            }
+
+                                        </td>
+                                        <td><a class="fa fa-edit" data-toggle="tooltip" title="Edit" href="@Url.Action("EditQuotation","Quotation",new { quotationId=item.ID})"></a></td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div id="LoadPopup">
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+        $(document).ready(function () {
+        DisplayMessage("@TempData["MessageType"]", "@TempData["Message"]");
+        $('#manageAssets').DataTable();
+        $('[data-toggle="tooltip"]').tooltip();
+        });
+
+
+        function GetInvoice(ID) {
+        var url = '@Url.Action("GenerateInvoice", "Quotation")?Id=' + ID; 
+        if (url != "" && url != null) {
+            $("#LoadPopup").load(url, function () {
+                $('#LoadPopup').show();
+                $('#modal-Assign').modal({
+                    show: 'true',
+                    backdrop : false
+                });
+            })
+        }
+    }
+</script>

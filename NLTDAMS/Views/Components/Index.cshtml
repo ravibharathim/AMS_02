@@ -1,0 +1,96 @@
+﻿
+@model IEnumerable<AMSUtilities.Models.ComponentsModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/dataTables.bootstrap.min.css" rel="stylesheet" />
+
+<div class="box">
+    <div class="box-header">
+        <h2 class="box-title">Component</h2>
+        <div class="pull-right">
+            <a class="btn btn-primary" href="@Url.Action("NewComponents","Components")">CREATE COMPONENT</a>
+        </div>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+       
+        <table id="Components" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Component Name</th>
+                    <th>Component Type</th>
+                    <th>Description</th>
+                    <th>Action</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                  
+                <tr>
+                    
+                    <td>@item.ComponentName</td>
+                    <td>@item.ComponentTypeName</td>
+                    <td>@item.Description</td>
+                    <td>
+                    <a class="fa fa-edit" data-toggle="tooltip" title="Edit" href="@Url.Action("UpdateComponents", "Components", new { id = item.ID })"></a>
+                    </td>
+
+                </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <!-- /.box-body -->
+    <div id="LoadPopup">
+
+    </div>
+</div>
+<script src="~/Scripts/AMS/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/AMS/dataTables.bootstrap.min.js"></script>
+<script>
+        $(function () {
+            $('#Components').DataTable();
+        })
+
+     $(document).ready(function () {
+        DisplayMessage("@TempData["MessageType"]", "@TempData["Message"]");
+        $('#Components').DataTable();
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+
+    function GetAssignAsset(ID) {
+        var url = '@Url.Action("AssignComponents", "Components")?Id=' + ID; 
+        if (url != "" && url != null) {
+            $("#LoadPopup").load(url, function () {
+                $('#LoadPopup').show();
+                $('#modal-Assign').modal({
+                    show: 'true',
+                    backdrop : false
+                });
+            })
+        }
+    }
+
+    function GetUnassignAsset(ID) {
+        var url = '@Url.Action("UnassignComponents", "Components")?Id=' + ID; 
+        if (url != "" && url != null) {
+            $("#LoadPopup").load(url, function () {
+                $('#LoadPopup').show();
+                $('#modal-Unassign').modal({
+                    show: 'true',
+                    backdrop : false
+                });
+            })
+        }
+    }   
+</script>

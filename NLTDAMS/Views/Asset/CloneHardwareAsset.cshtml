@@ -1,0 +1,314 @@
+﻿@model AMSUtilities.Models.HardwareAssetModel
+@{
+    ViewBag.Title = "CloneHardwareAsset";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@using (Html.BeginForm("CreateHardwareAsset", "Asset", FormMethod.Post, new { @name = "createHardwareAsset", @id = "formCreateAsset", @class = "formAssetCreation" }))
+{
+    //int i = 0;
+    @Html.AntiForgeryToken()
+    string warrantyStartDate = DateTime.Now.ToString("MM/dd/yyyy");
+    if (Model.WarrantyStartDate != DateTime.MinValue && Model.WarrantyStartDate != null)
+    {
+        warrantyStartDate = Model.WarrantyStartDate.ToString("MM/dd/yyyy");
+    }
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Create Hardware Asset</h3>
+                </div>
+                <div class="box-body">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label for="InvoiceNumber">Invoice</label>
+                                <select id="invoiceId" name="InvoiceId" class="form-control">
+                                    <option disabled selected value="">Please select value</option>
+                                    <option value="1">00123</option>
+                                    <option value="2">00124</option>
+                                    <option value="3">00125</option>
+                                </select>
+                                @*@Html.ValidationMessageFor(model => model.InvoiceId, "", new { @class = "text-danger" })*@
+                                @*<div class="col-sm-1 text-left">
+                                        <a data-toggle="modal" data-target="#createModal" data-select="assigned_user_select" class="btn btn-sm btn-default">New</a>
+                                    </div>*@
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="Asset_Category">Asset Category</label>
+                            @Html.DropDownListFor(model => model.AssetCategoryId, Model.AssetCategories, new { @id = "assetCategory", @class = "form-control", @disabled = "true" })
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="Asset_Type">Asset Type</label>
+                            @Html.DropDownListFor(model => model.AssetTypeID, Model.AssetTypes, new { @id = "assetType", @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.AssetTypeID, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label for="AssetName">Asset Name</label>
+                                @Html.TextBoxFor(model => model.AssetName, "" as string, new { @id = "assetName", @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.AssetName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label for="From">Serial Number</label>
+                                @Html.TextBoxFor(model => model.SerialNumber, "" as string, new { @id = "serialNumber", @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.SerialNumber, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label for="From">Model</label>
+                                @Html.TextBoxFor(model => model.Model, Model.Model as string, new { @id = "modelNumber", @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Model, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label for="From">Service Tag</label>
+                                @Html.TextBoxFor(model => model.ServiceTag, Model.ServiceTag as string, new { @id = "serviceTag", @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ServiceTag, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="Manufacturer">Manufacturer</label>
+                            @Html.TextBoxFor(model => model.Manufacturer, Model.Manufacturer as string, new { @id = "manufacturer", @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Manufacturer, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label for="From">Warranty Start Date</label>
+                                <div class='input-group date startDate'>
+                                    @Html.TextBox("WarrantyStartDate", warrantyStartDate, new { @id = "warrantyStartDate", @class = "form-control" })
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.WarrantyStartDate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label for="To">Warranty End Date</label>
+                                <div class='input-group date endDate'>
+                                    @Html.TextBox("WarrantyEndDate", Model.WarrantyEndDate.ToString("MM/dd/yyyy"), new { @id = "warrantyEndDate", @class = "form-control" })
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.WarrantyEndDate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="Reason">Hardware Description</label>
+                                @Html.TextAreaFor(model => model.Comment, new { @cols = "20", @rows = "2", @id = "hardwareDescription", @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div id="alert-messageComponent"></div>
+                    <div id="partialPlaceHolder"></div>
+                    <div class="row">
+                        <div class="col-sm-6" style="float:right">
+                            <button type="button" style="margin-left:10px" class="btn btn-primary pull-right" id="btnCancel">
+                                CANCEL
+                            </button>
+                            <button type="submit" style="margin-left:10px" class="btn btn-primary pull-right" id="btnCreateAndClone" onclick="$('#cloneId').val(true)">
+                                CREATE & CLONE
+                            </button>
+                            <button type="submit" class="btn btn-primary pull-right" id="btnCreate" onclick="$('#cloneId').val(false)">
+                                CREATE
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                @Html.Hidden("isClone", false, new { @id = "cloneId" })
+            </div>
+        </div>
+    </div>
+}
+@Scripts.Render("~/bundles/jqueryval")
+<script>
+    $(function () {
+        $("#serialNumber").val("");
+        $("#assetName").val("");
+        if ('@TempData["Message"]'!= null &&'@TempData["Message"]'!= ""&&'@TempData["MessageType"]'!= null &&'@TempData["MessageType"]'!= "")
+         {
+             DisplayMessage('@TempData["MessageType"]', '@TempData["Message"]')
+         }
+         var assetType = $("#assetType").children("option:selected").val();
+             $("#componentsTab").css("display", "block");
+             var url = '@Url.Action("ManageComponents", "Asset")?assetType=' + assetType + '&assetId=' + '@Model.AssetID';
+             if (url != "" && url != null) {
+                 $("#partialPlaceHolder").load(url, function () {
+              $('#partialPlaceHolder').fadeIn('fast');
+              });
+             }
+    $("#btnCancel").on("click", function () {
+        var url = '@Url.Action("ManageAssets", "Asset")';
+        document.getElementById("formCreateAsset").action = url;
+        document.getElementById("formCreateAsset").submit();
+    });
+     $("#assetType").on("change", function () {
+         var assetType = $(this).children("option:selected").val();
+             $("#componentsTab").css("display", "block");
+              var url =  '@Url.Action("ManageComponents", "Asset")?assetType='+assetType;
+              if (url != "" && url != null) {
+              $("#partialPlaceHolder").load(url, function () {
+              $('#partialPlaceHolder').fadeIn('fast');
+              });
+             }
+     });
+       @*$("#btnCreateAndClone").on("click", function () {
+       $("#cloneId").val(true);
+       var url = '@Url.Action("CreateHardwareAsset", "Asset")';
+        document.getElementById("formCreateAsset").action = url;
+        document.getElementById("formCreateAsset").submit();
+       });
+           $("#btnCreate").on("click", function () {
+        $("#cloneId").val(false);
+       var url = '@Url.Action("CreateHardwareAsset", "Asset")';
+        document.getElementById("formCreateAsset").action = url;
+        document.getElementById("formCreateAsset").submit();
+    });*@
+ });
+     function createComponent(componentTypeId, assetCategoryId, dropdownId, componentNameId,descriptionId,compValidationId,descValidationId,modalId) {
+    var componentName = $("#" + componentNameId).val();
+    var description = $("#" + descriptionId).val();
+    var error=false;
+    if(componentName==null || componentName=="")
+    {
+    error=true;
+     $("#" + compValidationId).css("display","block");
+    }
+    else
+    {
+      $("#" + compValidationId).css("display","none");
+    }
+     if(description==null || description=="")
+    {
+    error=true;
+     $("#" + descValidationId).css("display","block");
+    }
+    else
+    {
+      $("#" + descValidationId).css("display","none");
+    }
+
+    var Component={
+    ComponentTypeID:componentTypeId,
+    ComponentName:componentName,
+    Description : description
+    };
+
+    if(error==false)
+    {
+    $.ajax({
+        url: '@Url.Action("CreateComponent","Asset")',
+             type: 'POST',
+             data: { component: Component },
+              success: function(result) {
+                 if(result!="Error" && result!="0" && result!=""){
+                  addOption(componentName,result,dropdownId);
+                 $("#"+modalId).modal("hide");
+                 SuccessAlert("Component added successfully");
+                 $("html, body").animate({ scrollTop: 0 }, "slow");
+
+                }
+                },
+                failure: function(response) {
+                    alert(response.responseText);
+                },
+                error: function(response) {
+                    alert(response.responseText);
+                }
+
+        });
+    }
+    else
+    {
+    return false;
+    }
+    }
+    function addOption(optionText,optionValue,selectId)
+    {
+            $('#'+selectId).append('<option value="'+optionValue+'">'+optionText+'</option>');
+    }
+</script>
+@*<script src="~/Scripts/AMS/jquery-1.10.0.min.js"></script>
+    <script src="~/Scripts/AMS/jquery-ui.min.js"></script>*@
+<link href="~/Content/AMS/jquery-ui.css" rel="stylesheet" />
+<script>
+    $(function () {
+        $("#modelNumber").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '/Asset/AutoCompleteForModel/',
+                    data: "{ 'prefix': '" + request.term + "'}",
+                    dataType: "json",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return item;
+                        }))
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            },
+            select: function (e, i) {
+                $("#modelNumber").val(i.item.val);
+            },
+            minLength: 1
+        });
+    });
+</script>
+
+<script>
+    $(function () {
+        $("#manufacturer").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '/Asset/AutoCompleteForManufacturer/',
+                    data: "{ 'prefix': '" + request.term + "'}",
+                    dataType: "json",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return item;
+                        }))
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            },
+            select: function (e, i) {
+                $("#manufacturer").val(i.item.val);
+            },
+            minLength: 1
+        });
+    });
+</script>
+
+

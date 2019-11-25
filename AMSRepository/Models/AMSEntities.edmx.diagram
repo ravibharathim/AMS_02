@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8ac22d35a8124c74b0bb71764ae51f96" Name="Diagram1" ZoomLevel="64">
+        <EntityTypeShape EntityType="AMSModel.AssetCategory" Width="1.5" PointX="3" PointY="16.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMSModel.AssetPurchaseOrderMapping" Width="1.5" PointX="9.75" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMSModel.AssetRequest" Width="1.5" PointX="7.5" PointY="22.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMSModel.AssetRequestApprovalHistory" Width="1.5" PointX="12.75" PointY="22.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMSModel.AssetRequestStatus" Width="1.5" PointX="5.25" PointY="23.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMSModel.Assets" Width="1.5" PointX="7.5" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMSModel.AssetStatus" Width="1.5" PointX="10.5" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMSModel.AssetTracker" Width="1.5" PointX="12.75" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMSModel.AssetTypes" Width="1.5" PointX="5.25" PointY="16.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMSModel.ComponentAssetMapping" Width="1.5" PointX="9.75" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMSModel.Components" Width="1.5" PointX="7.5" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMSModel.ComponentType" Width="1.5" PointX="5.25" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMSModel.Employee" Width="1.5" PointX="5.25" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMSModel.EmployeeAssetMapping" Width="1.5" PointX="9.75" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMSModel.EmployeeRole" Width="1.5" PointX="3" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMSModel.HardwareAssets" Width="1.5" PointX="9.75" PointY="24" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMSModel.Location" Width="1.5" PointX="0.75" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMSModel.Log" Width="1.5" PointX="4.25" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMSModel.PurchaseOrder" Width="1.5" PointX="12" PointY="19.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMSModel.PurchaseStatus" Width="1.5" PointX="9.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMSModel.Quotation" Width="1.5" PointX="9.75" PointY="18.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMSModel.QuotationStatus" Width="1.5" PointX="7.5" PointY="16.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMSModel.Seats" Width="1.5" PointX="3" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMSModel.SoftwareAssets" Width="1.5" PointX="9.75" PointY="27.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMSModel.Vendor" Width="1.5" PointX="7.5" PointY="18.875" IsExpanded="true" />
+        <AssociationConnector Association="AMSModel.FK_AssetTypes_AssetCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="AMSModel.FK_AssetPurchaseOrderMapping_Assets" ManuallyRouted="false" />
+        <AssociationConnector Association="AMSModel.FK_AssetPurchaseOrderMapping_PurchaseOrder" ManuallyRouted="false" />
+        <AssociationConnector Association="AMSModel.FK__AssetRequ__Asset__19DFD96B" ManuallyRouted="false" />
+        <AssociationConnector Association="AMSModel.FK__AssetRequ__Asset__1BC821DD" ManuallyRouted="false" />
+        <AssociationConnector Association="AMSModel.FK_Quotation_AssetRequest" ManuallyRouted="false" />
+        <AssociationConnector Association="AMSModel.FK__AssetRequ__Appro__1AD3FDA4" ManuallyRouted="false" />
+        <AssociationConnector Association="AMSModel.FK__Component__Actua__44CA3770" ManuallyRouted="false" />
+        <AssociationConnector Association="AMSModel.FK__Component__Assig__43D61337" ManuallyRouted="false" />
+        <AssociationConnector Association="AMSModel.FK__EmployeeA__Asset__1EA48E88" ManuallyRouted="false" />
+        <AssociationConnector Association="AMSModel.FK_Assets_AssetTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="AMSModel.FK_Assets_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="AMSModel.FK_AssetTracker_Assets" ManuallyRouted="false" />
+        <AssociationConnector Association="AMSModel.FK_HardwareAssets_Assets" ManuallyRouted="false" />
+        <AssociationConnector Association="AMSModel.FK_SoftwareAssets_Assets" ManuallyRouted="false" />
+        <AssociationConnector Association="AMSModel.FK_AssetTracker_AssetStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="AMSModel.FK_AssetTracker_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="AMSModel.FK_ComponentType_AssetTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="AMSModel.FK_ComponentAssetMapping_Components" ManuallyRouted="false" />
+        <AssociationConnector Association="AMSModel.FK_Components_ComponentType" ManuallyRouted="false" />
+        <AssociationConnector Association="AMSModel.FK__Employee__Employ__1CBC4616" ManuallyRouted="false" />
+        <AssociationConnector Association="AMSModel.FK__Employee__SeatID__1DB06A4F" ManuallyRouted="false" />
+        <AssociationConnector Association="AMSModel.FK_EmployeeAssetMapping_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="AMSModel.FK_Vendor_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="AMSModel.FK__Seats__LocationI__1F98B2C1" ManuallyRouted="false" />
+        <AssociationConnector Association="AMSModel.FK_PurchaseOrder_PurchaseStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="AMSModel.FK_PurchaseOrder_Quotation" ManuallyRouted="false" />
+        <AssociationConnector Association="AMSModel.FK_Quotation_QuotationStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="AMSModel.FK_Quotation_Vendor" ManuallyRouted="false" />
+        <AssociationConnector Association="AMSModel.FK_Assets_AssetStatus" />
+        <AssociationConnector Association="AMSModel.FK_ComponentType_AssetCategory" />
+        <EntityTypeShape EntityType="AMSModel.ComponentStatus" Width="1.5" PointX="0.75" PointY="0.875" />
+        <EntityTypeShape EntityType="AMSModel.ComponentTracker" Width="1.5" PointX="0.75" PointY="3.75" />
+        <AssociationConnector Association="AMSModel.FK_ComponentAssetMapping_ComponentStatus" />
+        <AssociationConnector Association="AMSModel.FK_ComponentAssetMapping_ComponentTypeID" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

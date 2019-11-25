@@ -1,0 +1,44 @@
+﻿@model AMSUtilities.Models.AssetModel
+
+<div class="modal fade" id="modal-Unassign">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @using (Html.BeginForm("UnassignAsset", "Asset", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Unassign Asset</h4>
+                </div>
+                <div class="modal-body">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(m => m.ID)
+                    @Html.HiddenFor(m => m.AssetName)
+                    @Html.HiddenFor(m => m.AssetTypeID)
+                    @Html.HiddenFor(m => m.SerialNumber)
+                    @Html.HiddenFor(m => m.AssetStatusID)
+                    @Html.HiddenFor(m => m.CreatedDate)
+                    @Html.HiddenFor(m => m.CreatedBy)
+                    @Html.HiddenFor(m => m.EmployeeID)
+                    <p>Do you want to remove @Html.DisplayFor(m => m.AssetName) from @Html.DisplayFor(m => m.EmployeeName)?</p>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Remarks)
+                        <div>
+                            @Html.TextAreaFor(m => m.Remarks, new { @class = "form-control", rows = 5 })
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border-top:none;">
+                    <button type="submit" class="btn btn-primary">Unassign</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                </div>
+            }
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+@Scripts.Render("~/bundles/jqueryval")

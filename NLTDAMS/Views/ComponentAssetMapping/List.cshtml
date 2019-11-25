@@ -1,0 +1,133 @@
+﻿@model IEnumerable<AMSUtilities.Models.ComponentAssetMappingModel>
+@using AMSUtilities.Enums;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<h2>Manage Component</h2>*@
+
+<link href="~/Content/dataTables.bootstrap.min.css" rel="stylesheet" />
+
+<div class="box">
+    <div class="box-header">
+        <h2 class="box-title">Component</h2>
+        @*<div class="pull-right">
+            <a class="btn btn-primary" href="@Url.Action("NewComponents","Components")">ADD COMPONENT</a>
+        </div>*@
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        <table id="Components" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Component Name</th>
+                    <th>Asset Name</th>
+                    <th>Component Mapping Status</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.ComponentName</td>
+                        <td>@item.AssetName</td>
+                        @if (item.ComponentStatusId == Convert.ToInt32(ComponentStatus.Unassign))
+                        {
+                            <td>
+                                <a class="fa fa-thumbs-o-up" data-toggle="tooltip" title="Assign" onclick="GetAssignAsset(@item.ID);" data-backdrop="static"></a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                <a class="fa fa-thumbs-down" data-toggle="tooltip" title="UnAssign" onclick="GetUnassignAsset(@item.ID);" data-backdrop="static"></a>
+                            </td>
+                        }
+
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <!-- /.box-body -->
+    <div id="LoadPopup">
+
+    </div>
+</div>
+<script src="~/Scripts/AMS/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/AMS/dataTables.bootstrap.min.js"></script>
+<script>
+        //$(function () {
+        //    $('#Components').DataTable();
+        //})
+
+     $(document).ready(function () {
+        DisplayMessage("@TempData["MessageType"]", "@TempData["Message"]");
+        $('#Assets').DataTable();
+         $('[data-toggle="tooltip"]').tooltip();
+          // Setup - add a text input to each footer cell
+    $('#Components thead tr').clone(true).appendTo('#Components thead');
+    var Length = 0;
+    $('#Components thead tr:eq(1) th').each(function (i) {
+        Length = Length + 1;
+    });
+    Length = Length - 1;
+    $('#Components thead tr:eq(1) th').each(function (i) {
+        if (i < Length) {
+        var title = $(this).text();
+        $(this).html( '<input type="text" class="form-control" style="width:150px;" placeholder="'+title+'" />' );
+
+        $( 'input', this ).on( 'keyup change', function () {
+            if ( table.column(i).search() !== this.value ) {
+                table
+                    .column(i)
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+        }
+        else {
+            $(this).empty("");
+        }
+    });
+
+    var table = $('#Components').DataTable({
+        orderCellsTop: true,
+        fixedHeader: true
+    });
+    });
+
+    function GetAssignAsset(ID) {
+        var url = '@Url.Action("AssignComponents", "ComponentAssetMapping")?Id=' + ID;
+        if (url != "" && url != null) {
+            $("#LoadPopup").load(url, function () {
+                $('#LoadPopup').show();
+                $('#modal-Assign').modal({
+                    show: 'true',
+                    backdrop : false
+                });
+            })
+        }
+    }
+
+    function GetUnassignAsset(ID) {
+        var url = '@Url.Action("UnassignComponents", "ComponentAssetMapping")?Id=' + ID;
+        if (url != "" && url != null) {
+            $("#LoadPopup").load(url, function () {
+                $('#LoadPopup').show();
+                $('#modal-Unassign').modal({
+                    show: 'true',
+                    backdrop : false
+                });
+            })
+        }
+    }
+</script>
+
+

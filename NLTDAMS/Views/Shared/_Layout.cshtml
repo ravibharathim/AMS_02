@@ -1,0 +1,208 @@
+﻿<!DOCTYPE html>
+@*@using System.Security.Principal;
+@using AMSUtilities.Common;*@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Asset Management</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" href="~/Content/AMS/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link href="~/Content/AMS/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="~/Content/AMS/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/Content/AMS/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="~/Content/AMS/_all-skins.min.css">
+    <!-- Date Picker -->
+    <link rel="stylesheet" href="~/Content/AMS/bootstrap-datepicker.min.css">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="~/Content/AMS/daterangepicker.css">
+
+    <link href="~/Content/AMS/bootstrap-datetimepicker.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="~/Content/Site.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- Google Font -->
+    <link rel="stylesheet" href="~/Content/AMS/Sans.css">
+    <link href="~/Content/dataTables.bootstrap.min.css" rel="stylesheet" />
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+
+        <header class="main-header">
+            <!-- Logo -->
+            <a href="@Url.Action("Index", "Home")" class="logo">
+                <!-- mini logo for sidebar mini 50x50 pixels -->
+                <span class="logo-mini">AMS</span>
+                <!-- logo for regular state and mobile devices -->
+                <span class="logo-lg">NLTD AMS</span>
+            </a>
+            <!-- Header Navbar: style can be found in header.less -->
+            <nav class="navbar navbar-static-top">
+                <!-- Sidebar toggle button-->
+                <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <!-- User Account: style can be found in dropdown.less -->
+                        <li class="dropdown user user-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <span class="hidden-xs">@AMSUtilities.Common.UserDetails.GetFullName(User.Identity)</span>
+                            </a>
+                        </li>
+                        <!-- Control Sidebar Toggle Button -->
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside class="main-sidebar">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+                <!-- sidebar menu: : style can be found in sidebar.less -->
+                <ul class="sidebar-menu" data-widget="tree">
+                    <!-- Assets -->
+                    <li class="active treeview">
+                        <a href="#">
+                            <i class="fa fa-laptop"></i> <span>Assets</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li class="active"><a href="@Url.Action("ManageAssets","Asset")">Manage Assets</a></li>
+                            <li><a href="@Url.Action("HardwareAsset","Asset")">Create Hardware Asset</a></li>
+                            <li><a href="@Url.Action("SoftwareAsset","Asset")">Create Software Asset</a></li>
+                        </ul>
+                    </li>
+                    <!-- Components -->
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-hdd-o"></i> <span>Components</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="@Url.Action("List","ComponentAssetMapping")">Manage Components</a></li>
+                            @*<li><a href="@Url.Action("NewComponents","Components")">Create Component</a></li>*@
+                        </ul>
+                    </li>
+                    <!-- Employees -->
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-users"></i>
+                            <span>Employees</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="#">Manage Employees</a></li>
+                            <li><a href="#">Create Employee</a></li>
+                        </ul>
+                    </li>
+                    <!-- Vendors -->
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-user"></i>
+                            <span>Vendors</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="@Url.Action("List","Vendor")">Manage Vendors</a></li>
+                            <li><a href="@Url.Action("Create","Vendor")">Create Vendor</a></li>
+                        </ul>
+                    </li>
+                    <!-- Settings -->
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-cogs"></i>
+                            <span>Settings</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="@Url.Action("List","AssetCategory")"><i></i>Asset Categories</a></li>
+                            <li><a href="@Url.Action("List","AssetType")"><i></i>Asset Types</a></li>
+                            <li><a href="@Url.Action("List","ComponentType")"><i></i>Component Types</a></li>
+                            <li><a href="@Url.Action("Index","Components")"><i></i>Components</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+
+        <!-- ./wrapper -->
+        <!-- jQuery 3 -->
+        <script src="~/Scripts/Libraries/jquery.min.js"></script>
+        <!-- jQuery UI 1.11.4 -->
+        <script src="~/Scripts/Libraries/jquery-ui.min.js"></script>
+        <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+        <script>
+            $.widget.bridge('uibutton', $.ui.button);
+        </script>
+        <!-- Bootstrap 3.3.7 -->
+        <script src="~/Scripts/Libraries/bootstrap.min.js"></script>
+        <!-- Sparkline -->
+        <script src="~/Scripts/Libraries/jquery.sparkline.min.js"></script>
+        <!-- jvectormap -->
+        <script src="~/Scripts/Libraries/jquery-jvectormap-1.2.2.min.js"></script>
+        <script src="~/Scripts/Libraries/jquery-jvectormap-world-mill-en.js"></script>
+        <!-- daterangepicker -->
+        <script src="~/Scripts/Libraries/moment.min.js"></script>
+        <!--<script src="~/Scripts/Libraries/daterangepicker.js"></script>-->
+        <!-- datepicker -->
+        <script src="~/Scripts/Libraries/bootstrap-datetimepicker.js"></script>
+        @*<script src="~/Scripts/Libraries/bootstrap-datepicker.min.js"></script>*@
+        <!-- Slimscroll -->
+        <script src="~/Scripts/Libraries/jquery.slimscroll.min.js"></script>
+        <!-- FastClick -->
+        <script src="~/Scripts/Libraries/fastclick.js"></script>
+        <!-- AdminLTE App -->
+        <script src="~/Scripts/AdminLte/adminlte.min.js"></script>
+        <!-- AdminLTE for demo purposes -->
+        <script src="~/Scripts/Libraries/demo.js"></script>
+        <!-- Common java scripts used in application  -->
+        <script src="~/Scripts/AMS/AMS.js"></script>
+        @*DataTable*@
+        <script src="~/Scripts/Libraries/jquery.dataTables.min.js"></script>
+        <script src="~/Scripts/Libraries/dataTables.bootstrap.min.js"></script>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content">
+                <div id="alert-message"></div>
+                @RenderBody()
+            </div>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        <footer class="main-footer">
+            <div class="pull-right hidden-xs">
+                <b>Version</b> 1.0
+            </div>
+            <strong>Copyright &copy; @DateTime.Now.Year <a href="http://www.nltd.com/" target="_blank">NLTD India</a>.</strong> All rights
+            reserved.
+        </footer>
+    </div>
+    <script src="~/Scripts/AMS/AMSCalender.js"></script>
+</body>
+</html>

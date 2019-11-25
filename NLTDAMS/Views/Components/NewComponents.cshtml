@@ -1,0 +1,77 @@
+﻿@model AMSUtilities.Models.ComponentsModel
+
+@{
+    ViewBag.Title = "NewComponents";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("NewComponents", "Components", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="box box-primary col-md-12">
+        <h3 class="box-title">Create Component</h3>
+        <div class="box-body col-md-6">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group" style="margin-top:15px;">
+                    <div class="col-sm-4">
+                        @Html.Label("Component Name")
+                    </div>
+                    <div class="col-sm-6">
+
+                        @Html.TextBoxFor(m => m.ComponentName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.ComponentName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group" style="margin-top:15px;">
+                    <div class="col-sm-4">
+                        @Html.Label("Component Type")
+                    </div>
+                    <div class="col-sm-6">
+
+                        @Html.DropDownListFor(m => m.ComponentTypeID, Model.ComponentType, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.ComponentTypeID, "", new { @class = "text-danger" })
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="row ">
+                <div class="form-group" style="margin-top:15px;">
+                    <div class="col-sm-4">
+                        @Html.Label("Description")
+                    </div>
+                    <div class="col-sm-6">
+
+                        @Html.TextBoxFor(m => m.Description, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="row ">
+                <div class="form-group" style="margin-top:15px;">
+                    <div class="col-md-offset-4 col-sm-6">
+                        <button type="submit" class="btn btn-primary">Create</button>
+                        <a class="btn btn-primary" href="~/Components/index">Cancel</a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+}
+
+@Scripts.Render("~/bundles/jqueryval")

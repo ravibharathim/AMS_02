@@ -1,0 +1,43 @@
+﻿@model AMSUtilities.Models.AssetModel
+@{
+    ViewBag.Title = "Create Asset";
+}
+@using (Html.BeginForm("AssetCreation", "Asset", FormMethod.Post, new { @enctype = "multipart/form-data", @id = "formCreateAsset", @class = "formAssetCreation" }))
+{
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Create New Asset</h3>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label for="Asset_Category">Asset Category</label>
+                            @Html.DropDownList("AssetCategory", Model.AssetCategories, "Please Select", new { @id = "AssetCategory", @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script>
+    $(function () {
+    $("#AssetCategory").on("change", function () {
+    var selectedValue = $(this).children("option:selected").val();
+    //    + "?selectedItem=" + $(this).val();
+    var url = '';
+    if (selectedValue == 1 ) {
+        url = '@Url.Action("HardwareAsset", "Asset")';
+    }
+    else if (selectedValue == 2) {
+        url = '@Url.Action("SoftwareAsset", "Asset")';
+    }
+     document.getElementById("formCreateAsset").action = url;
+     document.getElementById("formCreateAsset").submit();
+    });
+ });
+</script>
+
+<script src="~/Scripts/AMS/CreateAsset.js"></script>

@@ -1,0 +1,58 @@
+﻿@model IEnumerable<AMSUtilities.Models.AssetTypeModel>
+@{
+    ViewBag.Title = "Asset Types";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Asset Types</h3>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <input type="button" value="Create Asset Type" class="btn btn-primary control-float-right" onclick='window.location.href = "@Url.Action("Create", "AssetType", routeValues: null)"' />
+                    </div>
+                </div>
+                <div class="row row-space">
+                    <div class="col-sm-12">
+
+                        <table id="assetTypes" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(model => model.Description)</th>
+                                    <th>@Html.DisplayNameFor(model => model.AssetCategoryName)</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.AssetCategoryName)</td>
+                                        <td>
+                                            <a class="fa fa-edit" href="@Url.Action("Edit","AssetType",new { id=item.ID})"></a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        DisplayMessage("@TempData["MessageType"]","@TempData["Message"]");
+        $('#assetTypes').DataTable();
+    })
+</script>
